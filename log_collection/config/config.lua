@@ -69,6 +69,8 @@ _M.fields = {
     "request_method",
     "time_local",
     "request_time",
+    "upstream_cache_status",
+    "body_bytes_sent",
 }
 
 
