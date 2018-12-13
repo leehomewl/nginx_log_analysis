@@ -1,9 +1,8 @@
 # nginx_log_analysis
-nginx_log_analysis是一个可以完成Nginx集中存储和日志分析的实时系统，目前已经在折800旗下的全部Nginx代理上运行，
-每天负责数十亿的事实日志分析
+    nginx_log_analysis是一个Nginx日志实时分析系统，目前已经在折800旗下的全部Nginx代理上运行，每天负责数十亿日志的实时分析。
 
 介绍  
-nginx_log_analysis是基于Ngx_Lua模块开发，由网络传输到InfluxDB数据库，可以部署在Nginx和OpenResty上，它有如下的功能：  
+    nginx_log_analysis是基于Ngx_Lua模块开发，由网络传输到InfluxDB数据库，可以部署在Nginx和OpenResty上，它有如下的功能：  
 1 支持Nginx集群日志集中存储  
 2 支持正则表达式的URI日志分析  
 3 支持upstream_time合并，可以正确统计到每条请求在后端的总时长  
