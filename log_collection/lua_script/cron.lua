@@ -15,19 +15,18 @@ if 0 == ngx.worker.id() then
     end
 end
 
-
-if  not init_config.mysql_config["active"]  then
-    return
+if  init_config.mysql_config["active"]  then
+    local ok, err = ngx.timer.at(0, log_lru_cache.init_set_cache)
+    if not ok then
+        ngx.log(ngx.ERR, "failed to create the timer: ", err)
+        return
+    end
+    
+    local ok, err = ngx.timer.every(init_config.update_cache_time, log_lru_cache.set_cache)
+    if not ok then
+        ngx.log(ngx.ERR, "failed to create timer: ", err)
+        return
+    end
 end
 
-local ok, err = ngx.timer.at(0, log_lru_cache.init_set_cache)
-if not ok then
-    ngx.log(ngx.ERR, "failed to create the timer: ", err)
-    return
-end
-
-local ok, err = ngx.timer.every(init_config.update_cache_time, log_lru_cache.set_cache)
-if not ok then
-    ngx.log(ngx.ERR, "failed to create timer: ", err)
-    return
-end
+--如果你有其他的定时任务要执行，请在下面配置即可，不会产生冲突
