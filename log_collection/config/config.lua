@@ -36,7 +36,7 @@ _M.mysql_config = {
     database = "",
     user = "",
     password = "",
-    active = true,
+    active = true,  -- 如果你测试的时候不打算使用MySQl，请配置为false，线上使用建议使用MySQL的功能，有利于后期各项功能开发和报警
     charset = "utf8",
     max_packet_size = 2048 * 2048
 }
