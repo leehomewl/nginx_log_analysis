@@ -39,5 +39,5 @@
   ![image](https://github.com/leehomewl/nginx_log_analysis/blob/master/img/Influxdb-table.png)
     
       
-  wiki中如果有不明白的细节可以加入 技术群 552494310@qq.com， 在里面可以提出问题和建议，谢谢！
+  wiki中如果有不明白的细节可以加入 技术群 552494310， 在里面可以提出问题和建议，谢谢！
   
