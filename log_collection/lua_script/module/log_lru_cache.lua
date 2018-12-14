@@ -1,8 +1,8 @@
 local _Lcache = {}
 
 local lrucache = require "resty.lrucache"
-local ut = require "utils"
-local init_config = require "config"
+local ut = require "log_collection/lua_script/module/utils"
+local init_config = require "log_collection/config/config"
 local cjson = require "cjson"
 
 -- 注意目录写入的权限
@@ -117,8 +117,8 @@ end
 
 function _Lcache.set_cache()
 
-    local init_config = require "config"
-    local sdt = require "sdt"
+ --   local init_config = require "config"
+    local sdt = require "log_collection/config/sdt"
     local ngx = require "ngx"
     local mysql = require "resty.mysql"
     ngx.sleep(3)

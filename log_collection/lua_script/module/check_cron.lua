@@ -1,8 +1,8 @@
 local check_cron = {}
 
 local http = require "resty.http"
-local init_config = require "config"
-local influxdb_cron = require "influxdb_cron"
+local init_config = require "log_collection/config/config"
+local influxdb_cron = require "log_collection/config/influxdb_cron"
 local ngx = require "ngx"
 
 

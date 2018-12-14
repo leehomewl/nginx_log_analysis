@@ -1,10 +1,11 @@
-local ut = require "utils"
+local ut = require "log_collection/lua_script/module/utils"
+local init_config = require "log_collection/config/config"
+local sdt = require "log_collection/config/sdt"
+local log_lru_cache = require "log_collection/lua_script/module/log_lru_cache"
+local get_ngx_var = require "log_collection/lua_script/module/get_ngx_var"
 local ngx = require "ngx"
-local init_config = require "config"
-local sdt = require "sdt"
 local logger = require "resty.logger.socket"
 local random = require "resty.random"
-local log_lru_cache = require "log_lru_cache"
 
 
 local host = ngx.var.host or ''
@@ -112,7 +113,6 @@ if not logger.initted() then
     end
 end
 
-local get_ngx_var = require "get_ngx_var"
 local tags = get_ngx_var.concat_tags(init_config.tags,url,host,upstream_name)
 local fields = get_ngx_var.concat_fields(init_config.fields,upstream_time,uri,crash_info,find_lru_res)
 local msg_measurement =  init_config.influxdb_table .. ","

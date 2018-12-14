@@ -1,7 +1,7 @@
-local cron_check = require "check_cron"
+local cron_check = require "log_collection/lua_script/module/check_cron"
 local ngx = require "ngx"
-local init_config = require "config"
-local log_lru_cache = require "log_lru_cache"
+local init_config = require "log_collection/config/config"
+local log_lru_cache = require "log_collection/lua_script/module/log_lru_cache"
 
 if 0 == ngx.worker.id() then
     local lua_data = ngx.shared.lua_data;
