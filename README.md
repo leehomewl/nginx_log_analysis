@@ -14,7 +14,7 @@ nginx_log_analysis是一个Nginx日志实时分析系统，目前已经在折800
     9、可设置自定义变量存储  
     
 ### 安装方式：  
-    详见wiki：[https://github.com/leehomewl/nginx_log_analysis/wiki]
+    详见wiki：++https://github.com/leehomewl/nginx_log_analysis/wiki++
  
 ### 特性说明：
 URI属性我们使用MySQL管理，作用如下：
