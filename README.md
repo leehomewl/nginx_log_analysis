@@ -40,4 +40,5 @@ URI属性我们使用MySQL管理，作用如下：
   InfluxDB字段uri，它是用户原生的uri。
   ![image](https://github.com/leehomewl/nginx_log_analysis/blob/master/img/Influxdb-table.png)
     
-:o: wiki中如果有不明白的细节可以加入 技术群 552494310， 在里面可以提出问题和建议，谢谢！
+:o: wiki中如果有不明白的细节可以加入QQ技术群：552494310
+
