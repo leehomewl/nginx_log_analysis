@@ -14,12 +14,12 @@ nginx_log_analysis是一个Nginx日志实时分析系统，目前已经在折800
     9、可设置自定义变量存储  
     
 ### 安装方式：  
-    详见wiki：++https://github.com/leehomewl/nginx_log_analysis/wiki++
+    详见wiki：https://github.com/leehomewl/nginx_log_analysis/wiki
  
 ### 特性说明：
 URI属性我们使用MySQL管理，作用如下：
 
-1.解决URI正则表达式合并归类问题，比如 a.com/123.html ,a.com/234.html 等，
+1. 解决URI正则表达式合并归类问题，比如 a.com/123.html ,a.com/234.html 等，
   它们在计算中属于同一个类型，都应该是属于a.com/[0-9]+\.html,正则URI的数据如果不能归类在一起计算，
   将会失去计算的意义，并且会影响整体数据的汇总的报表，我们用MySQL存放每个URI的属性，
   数据存储中提供了精确匹配URI计算，正则匹配，目录匹配。  
@@ -30,7 +30,7 @@ URI属性我们使用MySQL管理，作用如下：
   uri是请求在进行分析和统计时使用的uri    
   ![image](https://github.com/leehomewl/nginx_log_analysis/blob/master/img/mysql-table.png)    
 
-2.InfluxDB是高性能的时序数据库，非常适合用来做数据的分析和监控：     
+2. InfluxDB是高性能的时序数据库，非常适合用来做数据的分析和监控：     
   InfluxDB中特殊字段说明（其他的字段都是Nginx的变量名，很容易区分）：  
   InfluxDB字段url， 它是 host+uri组合的，如果你在config.lua中激活了MySQL，则用户的请求uri符合MySQL中
   的规则就会被Mysql中的格式替代，从而进行统计和分析，但如果在MySQl中找不到此URI，就会使用null来表示。因为
