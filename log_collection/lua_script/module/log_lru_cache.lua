@@ -1,8 +1,8 @@
 local _Lcache = {}
 
 local lrucache = require "resty.lrucache"
-local ut = require "log_collection/lua_script/module/utils"
-local init_config = require "log_collection/config/config"
+local ut = require "log_collection.lua_script.module.utils"
+local init_config = require "log_collection.config.config"
 local cjson = require "cjson"
 
 -- 注意目录写入的权限
@@ -35,7 +35,7 @@ end
 
 local find_uri = function(host,uri,url_list,uri_end)
     local jk_uri 
-    ngx.log(ngx.ERR,host .. uri .. uri_end)
+    --ngx.log(ngx.ERR,host .. uri .. uri_end)
     for key, value_uri in pairs(url_list) do
         local m, err  = ngx.re.find(uri ,  value_uri[1] .. uri_end ,"jo")
         if m then
@@ -47,6 +47,7 @@ end
 
 local to_table = function(host,uri,uri_type,catch_disaster,uri_regex,uri_wildcard)
     if uri_type == "precise" then
+        ngx.log(ngx.ERR,catch_disaster)
         log_uri:set(host .. uri,catch_disaster,ttl)
     elseif uri_type == "regex" then
         if uri_regex[host] then
@@ -69,16 +70,15 @@ end
 function _Lcache.get_cache_match(uri,host,uri_end)
     local list 
     local res 
-    local uri_end = uri_end
+   -- local uri_end = uri_end
     if uri_end then
         list = log_uri_regex:get(host)
     else 
         list = log_uri_wildcard:get(host)
-        uri_end = ''
     end
     if list then
         for key, value_uri in pairs(list) do
-            local m, err  = ngx.re.find(uri , value_uri[1] .. uri_end ,"jo")
+            local m, err  = ngx.re.find(uri , value_uri[1] ,"jo")
             if m then
                 return  host .. value_uri[1],value_uri[2]
             end
@@ -118,7 +118,7 @@ end
 function _Lcache.set_cache()
 
  --   local init_config = require "config"
-    local sdt = require "log_collection/config/sdt"
+    local sdt = require "log_collection.config.sdt"
     local ngx = require "ngx"
     local mysql = require "resty.mysql"
     ngx.sleep(3)
@@ -130,7 +130,7 @@ function _Lcache.set_cache()
     elseif sdt.online == true then 
        sql = 'select uri_type,host,uri,catch_disaster from nginx_var_information;'
     else
-        ngx.log(ngx.ERR, "config/sdt.lua 中online请设置为false或者true")
+        ngx.log(ngx.ERR, "config.sdt.lua 中online请设置为false或者true")
     end
 
 

@@ -19,16 +19,6 @@ function _ut.split(str, pat)
    return t
 end
 
-function _ut.hostname()
-    local f = io.popen ("/bin/hostname")
-    if not f then
-        return 'Invalid hostname,please  make sure  /bin/hostname exists'
-    end
-    local hostname = f:read("*a") or ""
-    f:close()
-    hostname =string.gsub(hostname, "\n$", "")
-    return hostname
-end
 
 
 return _ut

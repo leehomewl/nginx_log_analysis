@@ -1,8 +1,8 @@
 local check_cron = {}
 
 local http = require "resty.http"
-local init_config = require "log_collection/config/config"
-local influxdb_cron = require "log_collection/config/influxdb_cron"
+local init_config = require "log_collection.config.config"
+local influxdb_cron = require "log_collection.config.influxdb_cron"
 local ngx = require "ngx"
 
 
@@ -47,7 +47,7 @@ local insert_cq_sql = function(cq_sql)
             body = post_data
         })
         if res.status ~= 200 then
-            ngx.log(ngx.ERR, cq_sql ," was failed to insert ，" .. err)
+            ngx.log(ngx.ERR, cq_sql ," was failed to insert ，" .. err .. res.body)
             return
         end
     end

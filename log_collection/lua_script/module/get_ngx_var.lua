@@ -1,16 +1,23 @@
 local _G = {}
 
+local ngx = require "ngx"
+local sdt = require "log_collection.config.sdt"
+local get_ngx_diy_var = require "log_collection.lua_script.module.get_ngx_diy_var"
+
 --influxdb tags，索引在这个函数进行添加
-_G.concat_tags = function(tags,url,host,upstream_name)
+_G.concat_tags = function(tags,mysql_host_uri,host,upstream_name)
     local status = tonumber(ngx.var.status) or 00
     local tags_list = {}
     for i, v in pairs(tags) do
         if v == "status"  then
             tags_list[i] =  v .. '=' .. status
-        elseif v == "url"  then
-            tags_list[i] =  v .. '=' .. url
+        elseif v == "mysql_host_uri"  then
+            tags_list[i] =  v .. '=' .. mysql_host_uri
         elseif v == "host"  then
             tags_list[i] =  v .. '=' .. host
+        elseif v == "get_args_key_name"  then
+            local get_args_key_name = get_ngx_diy_var.get_args_key_name()
+            tags_list[i] =  v .. '="' .. get_args_key_name  .. '"'
         elseif v == "upstream_name"  then
             tags_list[i] =  v .. '=' .. upstream_name
         end
@@ -20,7 +27,7 @@ _G.concat_tags = function(tags,url,host,upstream_name)
 end
 
 --influxdb field，在这个函数进行添加
-_G.concat_fields = function(fields,upstream_time,uri,crash_info,find_lru_res)
+_G.concat_fields = function(fields,upstream_time,uri,crash_info,find_lru_res,crash_sign,host,cache_ttl)
     local upstream_status = ngx.var.upstream_status or ''
     local upstream_addr = ngx.var.upstream_addr or ''
     local http_user_agent =  ngx.var.http_user_agent or ''
@@ -77,11 +84,23 @@ _G.concat_fields = function(fields,upstream_time,uri,crash_info,find_lru_res)
             fields_list[i] =  v .. '=' .. request_time 
         elseif v == "upstream_cache_status" then
             fields_list[i] =  v .. '="' .. upstream_cache_status .. '"'
+        elseif v == "cache_ttl" then
+            fields_list[i] =  v .. '="' .. cache_ttl .. '"'
         else
             fields_list[i] =  v .. '="' .. 'null' .. '"'
             ngx.log(ngx.ERR,v,"is not support into influxdb, we not found it")
         end
     end
+    local org_url = ''
+    ngx.log(ngx.ERR,sdt.online,type(crash_sign),crash_sign,'----',ngx.var.host,ngx.var.uri)
+    if sdt.online  and tonumber(crash_sign) == 1 then
+        ngx.log(ngx.ERR,'----------------')
+        org_url = host .. ngx.var.request_uri
+        local org_url_data =  'org_url' .. '="' .. org_url .. '"'
+        table.insert(fields_list,org_url_data)
+        ngx.log(ngx.ERR, table.concat(fields_list,","))
+    end
+
     local res = table.concat(fields_list,",")
     return res
 end

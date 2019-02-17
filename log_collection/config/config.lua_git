@@ -3,21 +3,20 @@ local _M = {}
 --如果有多台Nginx需要存储日志，请将其中一台Nginx的机器hostname配置到此处，它是用来检查和更新influxdb的定时任务的，只需要一台即可
 --如果只有一台，请配置这一台的hostname
 --必填项
-_M.hostname_crond = ''
-
+_M.hostname_crond = ""
 
 _M.influx_config = {
     --Influxdb的IP地址
     host = "",
     -- Influxdb的数据库
-    database = "nginx",
+    database = "",
     -- Influxdb的udp端口
-    port = 8089,
+    port = 8089, 
     --数据传输模式是udp
     sock_type = "udp",
    --influxdb的HTTP API端口，默认是8086，如果你修改了Influxdb中[http]的配置的HTTP启动端口，请也修改这里
-    HTTP_port = 8086,
-
+    HTTP_port = 8086, 
+    
     --------------------------------------------------------------------------------------
     --下面的参数是lua-resty-logger-socket模块中的优化参数，大家可以自行添加或者使用默认
     flush_limit = 4096,  --2k 
@@ -42,16 +41,14 @@ _M.mysql_config = {
     max_packet_size = 2048 * 2048
 }
 
-
 -- Influxdb中表的索引字段，适合数据变化不频繁的字段，比如状态码等，暂时不建议修改，如果对Influxdb比较熟悉的用户可以适当添加
 -- Nginx的日志中会将下列变量存放到Influxdb的索引字段中
 _M.tags = {
     "status",
-    --当没有使用Mysql存储URI规则的情况下 
-    "mysql_host_uri",
+    --当没有使用Mysql存储URI规则的情况下，下面的url等于下面_M.fields 中的uri 
+    "url",
     "host",
     "upstream_name",
-    "get_args_key_name",
 }
 
 -- Influxdb中表的数据字段，可以支持自定义变量和Nginx所有可以获取的变量，具体操作请查看wiki
@@ -74,7 +71,6 @@ _M.fields = {
     "request_time",
     "upstream_cache_status",
     "body_bytes_sent",
-    "cache_ttl",
 }
 
 
@@ -86,7 +82,7 @@ _M.escape_list = {"http_referer","http_user_agent"}
 -- Ngx_Lua临时存放数据的路径，注意目录写入的权限,当mysql_config中active = true ，此配置才有意义
 _M.dump_list = "/tmp/dump_url_list"
 
--- Ngx_Lua缓存key的最大数量，根据MySQL存放的URL的数量进行设置，建议大于MySQL中URI的总数量50%，避免日后添加缓存key时，缓存空间不够，当mysql_config中active = true ，此配置才有意义
+-- Ngx_Lua缓存存放key的最大数量，根据MySQL存放的URL的数量进行设置，建议大于MySQL中URI的数量50%，避免日后添加缓存key时，缓存空间不够，当mysql_config中active = true ，此配置才有意义
 _M.max_cache_key = 10000
 
 -- Ngx_Lua缓存key的有效期,单位秒,当mysql_config中active = true ，此配置才有意义
@@ -101,6 +97,5 @@ _M.influxdb_table = "nginx"
 --设置为true ，表示会使用本工具默认已经创建的Influxdb连续查询的指令，如果你想自定义，而不使用默认的连续查询，请设置为false,当设置为false后，用户可以在自己去创建连续查询功能
 --自定义连续查询也可以由此工具管理，请查看本目录下的influxdb_cron.lua文件，它支持自定义的添加和删除
 _M.influxdb_cq_init = true 
-
 
 return _M

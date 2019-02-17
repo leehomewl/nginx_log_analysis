@@ -2,7 +2,7 @@ local _M = {}
 --下面的配置文件是用来添加连续查询，连续查询的语句建议使用 [[  ]]  来加入，请看下面的实例就明白了，
 --里面包含的双引号主要是influxdb的配置格式，请熟悉influxdb使用方式
 
-local init_config = require "log_collection/config/config"
+local init_config = require "log_collection.config.config"
 local database = init_config.influx_config["database"]
 local influxdb_table = init_config.influxdb_table
 
@@ -15,5 +15,6 @@ _M.continuous_query = {
     string.format([[CREATE CONTINUOUS QUERY "pv" ON %s BEGIN  select count(uri) as pv_count INTO %s."cq_data_expires".pv_nginx FROM %s group by  time(1m),url END]],database,database,influxdb_table),
     string.format([[CREATE CONTINUOUS QUERY "uri_status_group" ON %s BEGIN  select count(uri) as status_count INTO %s."cq_data_expires".usg_nginx FROM %s  group by  time(1m),url,status  END]],database,database,influxdb_table),
 }
+
 
 return  _M
