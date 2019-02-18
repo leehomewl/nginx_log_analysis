@@ -30,8 +30,9 @@ if  init_config.mysql_config["active"]  then
 end
 
 
-local cron_add_to_lc = require "staic_dt.lua_script.cron_add_to_lc"
-cron_add_to_lc.set_dt_cache()
+--静态容灾系统功能， 请配合https://github.com/leehomewl/ngx_sdt_system使用
+--local cron_add_to_lc = require "staic_dt.lua_script.cron_add_to_lc"
+--cron_add_to_lc.set_dt_cache()
 
 
 
