@@ -92,13 +92,10 @@ _G.concat_fields = function(fields,upstream_time,uri,crash_info,find_lru_res,cra
         end
     end
     local org_url = ''
-    ngx.log(ngx.ERR,sdt.online,type(crash_sign),crash_sign,'----',ngx.var.host,ngx.var.uri)
     if sdt.online  and tonumber(crash_sign) == 1 then
-        ngx.log(ngx.ERR,'----------------')
         org_url = host .. ngx.var.request_uri
         local org_url_data =  'org_url' .. '="' .. org_url .. '"'
         table.insert(fields_list,org_url_data)
-        ngx.log(ngx.ERR, table.concat(fields_list,","))
     end
 
     local res = table.concat(fields_list,",")

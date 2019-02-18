@@ -35,7 +35,6 @@ end
 
 local find_uri = function(host,uri,url_list,uri_end)
     local jk_uri 
-    --ngx.log(ngx.ERR,host .. uri .. uri_end)
     for key, value_uri in pairs(url_list) do
         local m, err  = ngx.re.find(uri ,  value_uri[1] .. uri_end ,"jo")
         if m then
@@ -47,7 +46,6 @@ end
 
 local to_table = function(host,uri,uri_type,catch_disaster,uri_regex,uri_wildcard)
     if uri_type == "precise" then
-        ngx.log(ngx.ERR,catch_disaster)
         log_uri:set(host .. uri,catch_disaster,ttl)
     elseif uri_type == "regex" then
         if uri_regex[host] then
