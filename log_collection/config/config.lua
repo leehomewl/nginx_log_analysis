@@ -12,7 +12,7 @@ _M.influx_config = {
     -- Influxdb的数据库
     database = "nginx",
     -- Influxdb的udp端口
-    port = 8089,
+    port = 8911,
     --数据传输模式是udp
     sock_type = "udp",
    --influxdb的HTTP API端口，默认是8086，如果你修改了Influxdb中[http]的配置的HTTP启动端口，请也修改这里
