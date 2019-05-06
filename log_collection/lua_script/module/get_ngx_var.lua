@@ -15,9 +15,9 @@ _G.concat_tags = function(tags,mysql_host_uri,host,upstream_name)
             tags_list[i] =  v .. '=' .. mysql_host_uri
         elseif v == "host"  then
             tags_list[i] =  v .. '=' .. host
-        elseif v == "get_args_key_name"  then
-            local get_args_key_name = get_ngx_diy_var.get_args_key_name()
-            tags_list[i] =  v .. '="' .. get_args_key_name  .. '"'
+        --elseif v == "get_args_key_name"  then
+          --  local get_args_key_name = get_ngx_diy_var.get_args_key_name()
+           -- tags_list[i] =  v .. '="' .. get_args_key_name  .. '"'
         elseif v == "upstream_name"  then
             tags_list[i] =  v .. '=' .. upstream_name
         end
